@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Deals List</h1>
+
+<form method="get">
+    <input type="text" name="q" placeholder="Search deals..." value="{{ request.GET.q }}">
+    <button type="submit">Search</button>
+</form>
+
+<a href="{% url 'deal-create' %}">Add New Deal</a>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Stock Number</th>
+            <th>Customer Name</th>
+            <th>Financed</th>
+            <th>Reserve</th>
+            <th>VSC</th>
+            <th>GAP</th>
+            <th>TW</th>
+            <th>Tricare</th>
+            <th>Key</th>
+            <th>Manager</th>
+            <th>Total Profit</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for deal in deals %}
+        <tr>
+            <td>{{ deal.deal_date }}</td>
+            <td>{{ deal.stock_number }}</td>
+            <td>{{ deal.last_name }}, {{ deal.first_name }}</td>
+            <td>{% if deal.financed %}Yes{% else %}No{% endif %}</td>
+            <td>${{ deal.reserve|floatformat:2 }}</td>
+            <td>${{ deal.vsc|floatformat:2 }}</td>
+            <td>${{ deal.gap|floatformat:2 }}</td>
+            <td>${{ deal.tw|floatformat:2 }}</td>
+            <td>${{ deal.tricare|floatformat:2 }}</td>
+            <td>${{ deal.key|floatformat:2 }}</td>
+            <td>{{ deal.manager }}</td>
+            <td>${{ deal.total_profit|floatformat:2 }}</td>
+            <td>
+                <a href="{% url 'deal-update' deal.pk %}">Edit</a> |
+                <a href="{% url 'deal-delete' deal.pk %}">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="13">No deals found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}

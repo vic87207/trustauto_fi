@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Deal Report</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Generate Report</button>
+    <button type="submit" name="export_csv">Export to CSV</button>
+</form>
+
+{% if total_deals %}
+<h2>Report Results</h2>
+<p>Total Deals: {{ total_deals }}</p>
+<p>Total Profit: ${{ total_profit|floatformat:2 }}</p>
+<p>Average Profit per Car (PVR): ${{ avg_profit_per_car|floatformat:2 }}</p>
+<p>Average Products Sold per Deal: {{ avg_products_sold|floatformat:2 }}</p>
+
+<h3>Products Sold</h3>
+<ul>
+    <li>VSC: {{ products_sold.vsc_sold }}</li>
+    <li>GAP: {{ products_sold.gap_sold }}</li>
+    <li>TW: {{ products_sold.tw_sold }}</li>
+    <li>Tricare: {{ products_sold.tricare_sold }}</li>
+    <li>Key: {{ products_sold.key_sold }}</li>
+</ul>
+{% endif %}
+
+{% endblock %}

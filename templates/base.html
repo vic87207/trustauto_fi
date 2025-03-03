@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TrustAuto Deals{% endblock title %}</title>
+    <!-- You can add your CSS links here -->
+    <style>
+        /* Add some basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #0779e4 3px solid;
+        }
+        header a {
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>TrustAuto Deals</h1>
+            <nav>
+                <a href="{% url 'deal-list' %}">Deals</a> |
+                <a href="{% url 'deal-create' %}">New Deal</a> |
+                <a href="{% url 'report' %}">Report</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        {% block content %}
+        <!-- Content from child templates will be inserted here -->
+        {% endblock content %}
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 TrustAuto Deals</p>
+        </div>
+    </footer>
+
+    <!-- You can add your JavaScript links here -->
+</body>
+</html>
