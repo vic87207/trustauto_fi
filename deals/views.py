@@ -1,13 +1,15 @@
 import csv
+
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView
 from django.urls import reverse_lazy
 from django.db.models import Q, Sum, Count, Case, When, IntegerField
-from django.http import HttpResponse
+from django.http import HttpResponse, request
 from .models import Deal
 from .forms import DealForm, ReportForm
 
 
-class DealListView(ListView):
+class DealListView(LoginRequiredMixin, ListView):
     model = Deal
     template_name = "deal_list.html"  # Remove 'deals/' prefix
     context_object_name = "deals"
@@ -24,27 +26,27 @@ class DealListView(ListView):
         return queryset
 
 
-class DealCreateView(CreateView):
+class DealCreateView(LoginRequiredMixin,CreateView):
     model = Deal
     form_class = DealForm
     template_name = "deal_form.html"  # Remove 'deals/' prefix
     success_url = reverse_lazy("deal-list")
 
 
-class DealUpdateView(UpdateView):
+class DealUpdateView(LoginRequiredMixin,UpdateView):
     model = Deal
     form_class = DealForm
     template_name = "deal_form.html"  # Remove 'deals/' prefix
     success_url = reverse_lazy("deal-list")
 
 
-class DealDeleteView(DeleteView):
+class DealDeleteView(LoginRequiredMixin,DeleteView):
     model = Deal
     template_name = "deal_confirm_delete.html"  # Remove 'deals/' prefix
     success_url = reverse_lazy("deal-list")
 
 
-class ReportView(FormView):
+class ReportView(LoginRequiredMixin,FormView):
     template_name = "report.html"
     form_class = ReportForm
 
